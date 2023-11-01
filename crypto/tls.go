@@ -5,6 +5,7 @@ import (
 	"crypto/rsa"
 	"crypto/tls"
 	"crypto/x509"
+	"crypto/x509/pkix"
 	"encoding/pem"
 	"math/big"
 	"net"
@@ -47,10 +48,16 @@ func (service *TLSService) GenerateCertsForHost(host string) error {
 		return err
 	}
 
+	issuer := pkix.Name{
+		CommonName: "Portainer Agent",
+	}
+
 	template := x509.Certificate{
 		SerialNumber:          serialNumber,
+		Issuer:                issuer,
 		NotAfter:              time.Now().AddDate(1, 0, 0),
 		NotBefore:             time.Now(),
+		Subject:               issuer,
 		KeyUsage:              x509.KeyUsageKeyEncipherment | x509.KeyUsageDigitalSignature,
 		ExtKeyUsage:           []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
 		BasicConstraintsValid: true,
