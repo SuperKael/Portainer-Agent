@@ -27,7 +27,6 @@ jobs:
           - { platform: linux, arch: arm64 }
           - { platform: windows, arch: amd64, version: 1809 }
           - { platform: windows, arch: amd64, version: ltsc2022 }
-    runs-on: arc-runner-set
     steps:
       - name: "[preparation] checkout the current branch"
         uses: actions/checkout@v3.5.3
@@ -98,7 +97,6 @@ jobs:
         env:
           CONTAINER_IMAGE_TAG: ${{ env.CONTAINER_IMAGE_TAG }}
   build_manifests:
-    runs-on: arc-runner-set
     needs: [build_images]
     steps:
       - name: "[preparation] docker login"
