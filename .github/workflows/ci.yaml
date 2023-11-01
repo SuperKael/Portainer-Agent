@@ -27,6 +27,7 @@ jobs:
           - { platform: linux, arch: arm64 }
           - { platform: windows, arch: amd64, version: 1809 }
           - { platform: windows, arch: amd64, version: ltsc2022 }
+    runs-on: ubuntu-latest
     steps:
       - name: "[preparation] checkout the current branch"
         uses: actions/checkout@v3.5.3
@@ -98,6 +99,7 @@ jobs:
           CONTAINER_IMAGE_TAG: ${{ env.CONTAINER_IMAGE_TAG }}
   build_manifests:
     needs: [build_images]
+    runs-on: ubuntu-latest
     steps:
       - name: "[preparation] docker login"
         uses: docker/login-action@v2.2.0
